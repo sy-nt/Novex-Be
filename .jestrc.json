@@ -1,0 +1,28 @@
+{
+  "moduleFileExtensions": [
+    "js",
+    "json",
+    "ts"
+  ],
+  "rootDir": ".",
+  "testEnvironment": "node",
+  "coverageDirectory": "./coverage",
+  "testRegex": ".spec.ts$",
+  "testPathIgnorePatterns": [
+    "\\.e2e-spec\\.ts$"
+  ],
+  "moduleNameMapper": {
+    "@identity/(.*)$": "<rootDir>/apps/identity/src/$1",
+    "@campaign/(.*)$": "<rootDir>/apps/campaign/src/$1",
+    "@catalog/(.*)$": "<rootDir>/apps/catalog/src/$1",
+    "@integration/(.*)$": "<rootDir>/apps/integration/src/$1",
+    "@reward/(.*)$": "<rootDir>/apps/reward/src/$1",
+    "@trading/(.*)$": "<rootDir>/apps/trading/src/$1",
+    "@core/(.*)$": "<rootDir>/core/$1",
+    "@core$": "<rootDir>/core/index.ts",
+    "@tests/(.*)$": "<rootDir>/tests/$1"
+  },
+  "transform": {
+    "^.+\\.(t|j)s$": "ts-jest"
+  }
+}

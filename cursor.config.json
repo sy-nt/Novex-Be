@@ -1,0 +1,30 @@
+{
+  "projectIntelligenceVersion": 1,
+  "generatedAt": "20260509094051",
+  "workspace": "DDDv2",
+  "detected": {
+    "architecture": "modular-monorepo-ddd-cqrs",
+    "apps": [
+      "identity",
+      "campaign",
+      "catalog",
+      "integration",
+      "reward",
+      "trading"
+    ],
+    "sharedLibrary": "core",
+    "framework": "nestjs",
+    "database": "slonik",
+    "messaging": "nestjs-microservices-message-pattern",
+    "validation": [
+      "class-validator",
+      "zod"
+    ]
+  },
+  "unknowns": {
+    "sagaPattern": "not_detected",
+    "outboxPattern": "not_detected",
+    "kafka": "not_detected",
+    "rabbitmq": "not_detected"
+  }
+}

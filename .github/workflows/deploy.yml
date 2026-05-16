@@ -1,0 +1,59 @@
+name: CI/CD with Docker
+
+on:
+  push:
+    branches: ["main"]
+  workflow_dispatch:
+
+jobs:
+  build-and-deploy:
+    runs-on: self-hosted
+
+    env:
+      TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+      TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+      TELEGRAM_TOPIC_ID: ${{ secrets.TELEGRAM_TOPIC_ID }}
+
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v4
+
+      - name: Notify Telegram - Stopping
+        continue-on-error: true
+        run: bash .github/scripts/deploy_notify.sh stopping
+
+      - name: Stop existing containers
+        run: docker compose down || true
+
+      - name: Prepare environment file
+        run: |
+          if [ -f "${{ secrets.ENV_PATH }}" ]; then
+            cp "${{ secrets.ENV_PATH }}" .env
+            echo ".env copied successfully"
+          else
+            echo "❌ ERROR: .env file not found at $ENV_PATH"
+            exit 1
+          fi
+
+      - name: Build Docker image
+        run: |
+          docker build -t ci-cd-test-app:latest .
+
+      - name: Start Docker Compose
+        run: |
+          docker compose up -d --build
+
+      - name: Prune Docker images
+        run: |
+          docker container prune -f
+          docker image prune -f
+
+      - name: Notify Telegram - Success
+        if: success()
+        continue-on-error: true
+        run: bash .github/scripts/deploy_notify.sh success
+
+      - name: Notify Telegram - Failure
+        if: failure()
+        continue-on-error: true
+        run: bash .github/scripts/deploy_notify.sh failure

@@ -1,0 +1,77 @@
+{
+  "$schema": "https://json.schemastore.org/nest-cli",
+  "collection": "@nestjs/schematics",
+  "sourceRoot": "apps/identity/src",
+  "compilerOptions": {
+    "deleteOutDir": true,
+    "webpack": true,
+    "tsConfigPath": "apps/identity/tsconfig.app.json"
+  },
+  "monorepo": true,
+  "root": "apps/identity",
+  "projects": {
+    "campaign": {
+      "type": "application",
+      "root": "apps/campaign",
+      "entryFile": "main",
+      "sourceRoot": "apps/campaign/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/campaign/tsconfig.app.json"
+      }
+    },
+    "catalog": {
+      "type": "application",
+      "root": "apps/catalog",
+      "entryFile": "main",
+      "sourceRoot": "apps/catalog/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/catalog/tsconfig.app.json"
+      }
+    },
+    "core": {
+      "type": "library",
+      "root": "core",
+      "entryFile": "index",
+      "sourceRoot": "core",
+      "compilerOptions": {
+        "tsConfigPath": "core/tsconfig.lib.json"
+      }
+    },
+    "identity": {
+      "type": "application",
+      "root": "apps/identity",
+      "entryFile": "main",
+      "sourceRoot": "apps/identity/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/identity/tsconfig.app.json"
+      }
+    },
+    "integration": {
+      "type": "application",
+      "root": "apps/integration",
+      "entryFile": "main",
+      "sourceRoot": "apps/integration/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/integration/tsconfig.app.json"
+      }
+    },
+    "reward": {
+      "type": "application",
+      "root": "apps/reward",
+      "entryFile": "main",
+      "sourceRoot": "apps/reward/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/reward/tsconfig.app.json"
+      }
+    },
+    "trading": {
+      "type": "application",
+      "root": "apps/trading",
+      "entryFile": "main",
+      "sourceRoot": "apps/trading/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/trading/tsconfig.app.json"
+      }
+    }
+  }
+}

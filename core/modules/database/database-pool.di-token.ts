@@ -1,0 +1,2 @@
+export const DATABASE_CONFIG = Symbol('DATABASE_CONFIG');
+export const DATABASE_POOL_MANAGER = Symbol('DATABASE_POOL_MANAGER');
