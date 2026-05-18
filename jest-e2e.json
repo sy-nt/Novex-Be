@@ -7,6 +7,7 @@
   "rootDir": ".",
   "testEnvironment": "node",
   "coverageDirectory": "./coverage",
+  "setupFiles": ["./tests/setup/jestSetupEnv.ts"],
   "setupFilesAfterEnv": [
     "./tests/setup/jestSetupAfterEnv.ts"
   ],
@@ -22,7 +23,9 @@
     "@trading/(.*)$": "<rootDir>/apps/trading/src/$1",
     "@core/(.*)$": "<rootDir>/core/$1",
     "@core$": "<rootDir>/core/index.ts",
-    "@tests/(.*)$": "<rootDir>/tests/$1"
+    "@tests/(.*)$": "<rootDir>/tests/$1",
+    "@app/libs/(.*)$": "<rootDir>/libs/$1",
+    "@app/libs$": "<rootDir>/libs/index.ts"
   },
   "transform": {
     "^.+\\.(t|j)s$": "ts-jest"

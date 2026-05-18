@@ -36,6 +36,7 @@
   },
   "dependencies": {
     "@nestjs/common": "^11.0.1",
+    "@nestjs/config": "^4.0.4",
     "@nestjs/core": "^11.0.1",
     "@nestjs/cqrs": "^11.0.3",
     "@nestjs/event-emitter": "^3.1.0",
@@ -43,6 +44,19 @@
     "@nestjs/microservices": "^11.1.19",
     "@nestjs/platform-express": "^11.0.1",
     "@nestjs/swagger": "^11.4.2",
+    "@opentelemetry/api": "^1.9.1",
+    "@opentelemetry/auto-instrumentations-node": "^0.76.0",
+    "@opentelemetry/exporter-metrics-otlp-http": "^0.218.0",
+    "@opentelemetry/exporter-prometheus": "^0.218.0",
+    "@opentelemetry/exporter-trace-otlp-http": "^0.218.0",
+    "@opentelemetry/instrumentation-express": "^0.66.0",
+    "@opentelemetry/instrumentation-http": "^0.218.0",
+    "@opentelemetry/instrumentation-kafkajs": "^0.27.0",
+    "@opentelemetry/instrumentation-nestjs-core": "^0.64.0",
+    "@opentelemetry/resources": "^2.7.1",
+    "@opentelemetry/sdk-metrics": "^2.7.1",
+    "@opentelemetry/sdk-node": "^0.218.0",
+    "@opentelemetry/semantic-conventions": "^1.41.1",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.15.1",
     "compression": "^1.8.1",
@@ -52,12 +66,15 @@
     "helmet": "^8.1.0",
     "nanoid": "^5.1.11",
     "nestjs-console": "^10.0.0",
+    "nestjs-pino": "^4.6.1",
     "nestjs-request-context": "^4.0.0",
     "node-vault": "^0.12.0",
     "oxide.ts": "^1.1.0",
+    "pino-pretty": "^13.1.3",
     "reflect-metadata": "^0.2.2",
     "rxjs": "^7.8.1",
     "slonik": "^48.14.1",
+    "uuid": "^14.0.0",
     "zod": "^4.4.3"
   },
   "devDependencies": {
@@ -66,11 +83,12 @@
     "@nestjs/cli": "^11.0.0",
     "@nestjs/schematics": "^11.0.0",
     "@nestjs/testing": "^11.0.1",
+    "@types/compression": "^1.8.1",
     "@types/express": "^5.0.0",
     "@types/jest": "^30.0.0",
     "@types/node": "^22.10.7",
     "@types/supertest": "^6.0.2",
-    "artillery": "^2.0.31",
+    "artillery": "^2.0.30",
     "artillery-plugin-faker": "^6.0.1",
     "dependency-cruiser": "^17.1.0",
     "eslint": "^9.18.0",
@@ -110,18 +128,20 @@
     "testEnvironment": "node",
     "roots": [
       "<rootDir>/apps/",
-      "<rootDir>/core/"
+      "<rootDir>/core/",
+      "<rootDir>/libs/"
     ],
     "moduleNameMapper": {
+      "^@app/libs(|/.*)$": "<rootDir>/libs/$1",
       "^@campaign/(.*)$": "<rootDir>/apps/campaign/src/$1",
       "^@catalog/(.*)$": "<rootDir>/apps/catalog/src/$1",
+      "^@core$": "<rootDir>/core/index.ts",
+      "^@core/(.*)$": "<rootDir>/core/$1",
       "^@identity/(.*)$": "<rootDir>/apps/identity/src/$1",
       "^@integration/(.*)$": "<rootDir>/apps/integration/src/$1",
       "^@reward/(.*)$": "<rootDir>/apps/reward/src/$1",
-      "^@trading/(.*)$": "<rootDir>/apps/trading/src/$1",
-      "^@core/(.*)$": "<rootDir>/core/$1",
-      "^@core$": "<rootDir>/core/index.ts",
-      "^@tests/(.*)$": "<rootDir>/tests/$1"
+      "^@tests/(.*)$": "<rootDir>/tests/$1",
+      "^@trading/(.*)$": "<rootDir>/apps/trading/src/$1"
     }
   }
 }

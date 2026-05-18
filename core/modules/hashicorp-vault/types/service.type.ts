@@ -1,7 +1,7 @@
 import { VaultAuthConfig, VaultClientOptions } from './auth.types';
 import { SecretDescriptor } from './secret.type';
 
-export interface VaultServiceOptions {
+export interface HashicorpVaultOptions {
   client: VaultClientOptions;
   auth: VaultAuthConfig;
   secrets: SecretDescriptor[];

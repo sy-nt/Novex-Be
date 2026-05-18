@@ -1,0 +1,72 @@
+services:
+  prometheus:
+    container_name: prometheus
+    image: prom/prometheus:${PROMETHEUS_VERSION}
+    command:
+      - --config.file=/etc/prometheus/prometheus.yml
+    ports:
+      - 9090:9090
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
+    restart: always
+    networks:
+      - monitor
+
+  grafana:
+    container_name: grafana
+    image: grafana/grafana:${GRAFANA_VERSION}
+    ports:
+      - ${GRAFANA_EXPOSED_PORT}:3000
+    volumes:
+      - grafana-storage:/var/lib/grafana
+    restart: always
+    networks:
+      - monitor
+
+  loki:
+    container_name: loki
+    image: grafana/loki:${LOKI_VERSION}
+    volumes:
+      - ./loki-config.yaml:/etc/loki/config.yaml
+      - grafana-loki-storage:/var/lib/loki
+    ports:
+      - "3100:3100"
+    restart: always
+    networks:
+      - monitor
+
+  tempo:
+    container_name: tempo
+    image: grafana/tempo:${TEMPO_VERSION}
+    command: ["-config.file=/etc/tempo.yaml"]
+    volumes:
+      - ./tempo.yaml:/etc/tempo.yaml
+      - grafana-tempo-storage:/var/lib/tempo
+    ports:
+      - "9095:9095"
+      - "3200:3200"
+    restart: always
+    networks:
+      - monitor
+
+  otel-collector:
+    container_name: otel-collector
+    image: otel/opentelemetry-collector-contrib:${OTEL_COLLECTOR_VERSION}
+    command: ["--config=/etc/otelcol/config.yaml"]
+    volumes:
+      - ./otel-collector-config.yaml:/etc/otelcol/config.yaml
+    ports:
+      - "4317:4317"
+      - "4318:4318"
+      - "8889:8889"
+    restart: always
+    networks:
+      - monitor
+
+networks:
+  monitor:
+    external: true
+volumes:
+  grafana-storage:
+  grafana-loki-storage:
+  grafana-tempo-storage:

@@ -8,3 +8,4 @@ export * from './hashicorp-vault/types/secret.type';
 export * from './database/database.module';
 export * from './database/database-pool.di-token';
 export { DatabasePoolManager } from './database/database-pool.manager';
+export * from './database/database-pool.types';

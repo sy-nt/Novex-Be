@@ -23,6 +23,12 @@
     "strictBindCallApply": false,
     "noFallthroughCasesInSwitch": false,
     "paths": {
+      "@app/libs": [
+        "libs"
+      ],
+      "@app/libs/*": [
+        "libs/*"
+      ],
       "@core": [
         "core"
       ],
@@ -44,6 +50,7 @@
     ".dependency-cruiser.js",
     "apps/**/*.ts",
     "core/**/*.ts",
+    "libs/**/*.ts",
     "tests/**/*.ts"
   ],
   "exclude": [

@@ -8,6 +8,8 @@ import { DatabaseTransactionConnection } from 'slonik';
 export class AppRequestContext extends RequestContext {
   requestId: string;
   transactionConnection?: DatabaseTransactionConnection; // For global transactions
+  traceId?: string;
+  spanId?: string;
 }
 
 export class RequestContextService {
@@ -40,5 +42,23 @@ export class RequestContextService {
   static cleanTransactionConnection(): void {
     const ctx = this.getContext();
     ctx.transactionConnection = undefined;
+  }
+
+  static setTraceId(id?: string): void {
+    const ctx = this.getContext();
+    ctx.traceId = id;
+  }
+
+  static getTraceId(): string | undefined {
+    return this.getContext().traceId;
+  }
+
+  static setSpanId(id?: string): void {
+    const ctx = this.getContext();
+    ctx.spanId = id;
+  }
+
+  static getSpanId(): string | undefined {
+    return this.getContext().spanId;
   }
 }

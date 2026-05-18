@@ -6,32 +6,27 @@ import {
   DATABASE_POOL_MANAGER,
 } from './database-pool.di-token';
 import { DatabasePoolBootstrap } from './database-pool.bootstrap';
+import { DatabaseConfig } from './database-pool.types';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 
 @Global()
-@Module({})
+@Module({
+  imports: [ConfigModule],
+})
 export class DatabaseModule {
-  static forRoot(config: {
-    host: string;
-    port: number;
-    database: string;
-  }): DynamicModule {
+  static forRoot(): DynamicModule {
     return {
       module: DatabaseModule,
       providers: [
         {
-          provide: DATABASE_CONFIG,
-          useValue: config,
-        },
-        {
           provide: DATABASE_POOL_MANAGER,
-          useFactory: (config: {
-            host: string;
-            port: number;
-            database: string;
-          }) => {
+          useFactory: (configService: ConfigService) => {
+            const config = configService.getOrThrow<DatabaseConfig>(
+              DATABASE_CONFIG.toString(),
+            );
             return new DatabasePoolManager(config);
           },
-          inject: [DATABASE_CONFIG],
+          inject: [ConfigService],
         },
         DatabasePoolBootstrap,
       ],

@@ -5,27 +5,29 @@ import {
 } from './hashicorp-vault.di-token';
 import { HashicorpVaultLifecycle } from './hashicorp-vault.lifecycle';
 import { HashicorpVaultService } from './hashicorp-vault.service';
-import { VaultServiceOptions } from './types/service.type';
+import { HashicorpVaultOptions } from './types/service.type';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 
 @Global()
-@Module({})
+@Module({
+  imports: [ConfigModule],
+})
 export class HashicorpVaultModule {
-  static forRoot(options: VaultServiceOptions): DynamicModule {
+  static forRoot(): DynamicModule {
     return {
       module: HashicorpVaultModule,
       providers: [
         {
-          provide: HASHICORP_VAULT_OPTIONS,
-          useValue: options,
-        },
-        {
           provide: HASHICORP_VAULT_SERVICE,
-          useFactory: async (options: VaultServiceOptions) => {
+          useFactory: async (configService: ConfigService) => {
+            const options = configService.getOrThrow<HashicorpVaultOptions>(
+              HASHICORP_VAULT_OPTIONS.toString(),
+            );
             const service = new HashicorpVaultService(options);
             await service.start();
             return service;
           },
-          inject: [HASHICORP_VAULT_OPTIONS],
+          inject: [ConfigService],
         },
         HashicorpVaultLifecycle,
       ],

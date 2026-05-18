@@ -5,7 +5,7 @@ export function loadAppEnv(appName: string) {
   const root = process.cwd();
   const paths = [resolve(root, '.env'), resolve(root, `apps/${appName}/.env`)];
 
-  if (process.env.NODE_ENV === 'test') {
+  if (process.env.NODE_ENV === 'TEST') {
     paths.push(resolve(root, '.env.test'));
   }
 

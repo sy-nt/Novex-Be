@@ -14,11 +14,11 @@ import {
 } from './secret-provider';
 import { AppRoleAuthProvider, TokenAuthProvider } from './auth-provider';
 import { resolveMergedValue } from './resolve-merged-value';
-import { VaultServiceOptions } from './types/service.type';
+import { HashicorpVaultOptions } from './types/service.type';
 
 function registerAuthProvider(
   registry: AuthProviderRegistry,
-  auth: VaultServiceOptions['auth'],
+  auth: HashicorpVaultOptions['auth'],
 ): void {
   switch (auth.type) {
     case VaultAuthType.AppRole:
@@ -40,7 +40,7 @@ export class HashicorpVaultService extends EventEmitter {
   private readonly authManager: VaultAuthManager;
   private readonly secretManager: VaultSecretManager;
 
-  constructor(private readonly options: VaultServiceOptions) {
+  constructor(private readonly options: HashicorpVaultOptions) {
     super();
 
     const client = vault(this.options.client);
