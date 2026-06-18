@@ -9,3 +9,7 @@ export * from './database/database.module';
 export * from './database/database-pool.di-token';
 export { DatabasePoolManager } from './database/database-pool.manager';
 export * from './database/database-pool.types';
+
+export * from './health-check/health-check.module';
+export * from './health-check/health-check.service';
+export * from './health-check/health-check.controller';

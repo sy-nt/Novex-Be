@@ -4,8 +4,6 @@ services:
     image: prom/prometheus:${PROMETHEUS_VERSION}
     command:
       - --config.file=/etc/prometheus/prometheus.yml
-    ports:
-      - 9090:9090
     volumes:
       - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
     restart: always
@@ -29,8 +27,6 @@ services:
     volumes:
       - ./loki-config.yaml:/etc/loki/config.yaml
       - grafana-loki-storage:/var/lib/loki
-    ports:
-      - "3100:3100"
     restart: always
     networks:
       - monitor
@@ -42,9 +38,6 @@ services:
     volumes:
       - ./tempo.yaml:/etc/tempo.yaml
       - grafana-tempo-storage:/var/lib/tempo
-    ports:
-      - "9095:9095"
-      - "3200:3200"
     restart: always
     networks:
       - monitor
@@ -56,9 +49,18 @@ services:
     volumes:
       - ./otel-collector-config.yaml:/etc/otelcol/config.yaml
     ports:
+      - "8889:8889"
       - "4317:4317"
       - "4318:4318"
-      - "8889:8889"
+    restart: always
+    networks:
+      - monitor
+
+  alertmanager:
+    image: prom/alertmanager:${ALERTMANAGER_VERSION}
+    container_name: alertmanager
+    volumes:
+      - ./alertmanager.yml:/etc/alertmanager/alertmanager.yml
     restart: always
     networks:
       - monitor

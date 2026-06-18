@@ -12,6 +12,8 @@ import { OTLPMetricExporter } from '@opentelemetry/exporter-metrics-otlp-http';
 import { PeriodicExportingMetricReader } from '@opentelemetry/sdk-metrics';
 import { getNodeAutoInstrumentations } from '@opentelemetry/auto-instrumentations-node';
 import { resolve } from 'path';
+import { BatchLogRecordProcessor } from '@opentelemetry/sdk-logs';
+import { OTLPLogExporter } from '@opentelemetry/exporter-logs-otlp-http';
 
 const tracing = (moduleName: string) => {
   dotenv.config({
@@ -38,22 +40,15 @@ const tracing = (moduleName: string) => {
       }),
     }),
 
-    instrumentations: [
-      getNodeAutoInstrumentations({
-        '@opentelemetry/instrumentation-express': {
-          enabled: true,
-        },
-        '@opentelemetry/instrumentation-http': {
-          enabled: true,
-        },
-        '@opentelemetry/instrumentation-kafkajs': {
-          enabled: true,
-        },
-        '@opentelemetry/instrumentation-nestjs-core': {
-          enabled: true,
-        },
-      }),
+    logRecordProcessors: [
+      new BatchLogRecordProcessor(
+        new OTLPLogExporter({
+          url: `${get('OTEL_EXPORTER_OTLP_ENDPOINT').required().asString()}/v1/logs`,
+        }),
+      ),
     ],
+
+    instrumentations: [getNodeAutoInstrumentations()],
   });
 
   sdk.start();

@@ -1,6 +1,5 @@
 import tracing from '@app/libs/telemetry/tracing';
 import { NestFactory } from '@nestjs/core';
-import { AppModule } from './app.module';
 import compression from 'compression';
 import {
   INestApplication,
@@ -11,7 +10,6 @@ import { setupSwagger } from '@app/libs';
 import { ConfigService } from '@nestjs/config';
 import helmet from 'helmet';
 import { firstLetterToUpperCase } from '@core';
-import { Logger } from 'nestjs-pino';
 
 tracing('identity');
 
@@ -30,6 +28,9 @@ function configureGlobalPipes(app: INestApplication) {
 }
 
 async function bootstrap() {
+  const { AppModule } = await import('./app.module.js');
+  const { Logger } = await import('nestjs-pino');
+
   const app = await NestFactory.create(AppModule, {
     bodyParser: true,
     bufferLogs: true,

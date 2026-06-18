@@ -11,10 +11,14 @@
   "setupFilesAfterEnv": [
     "./tests/setup/jestSetupAfterEnv.ts"
   ],
-  "transformIgnorePatterns": [],
+  "transformIgnorePatterns": [
+    "node_modules/(?!(@slonik)/)"
+  ],
   "globalSetup": "<rootDir>/tests/setup/jestGlobalSetup.ts",
   "testRegex": ".e2e-spec.ts$",
   "moduleNameMapper": {
+    "^slonik$": "<rootDir>/tests/mocks/slonik.ts",
+    "^uuid$": "<rootDir>/tests/mocks/uuid.ts",
     "@identity/(.*)$": "<rootDir>/apps/identity/src/$1",
     "@campaign/(.*)$": "<rootDir>/apps/campaign/src/$1",
     "@catalog/(.*)$": "<rootDir>/apps/catalog/src/$1",

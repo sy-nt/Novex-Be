@@ -52,7 +52,6 @@ export const loggerModuleParams: LoggerModuleAsyncParams = {
             requestId: req.requestId,
             method: req.method,
             url: req.url,
-            userAgent: req.headers['user-agent'],
             ip: req.ip,
           };
         },
@@ -101,7 +100,7 @@ export const loggerModuleParams: LoggerModuleAsyncParams = {
         censor: '[REDACTED]',
       },
 
-      autoLogging: true,
+      autoLogging: false,
     },
   }),
 };

@@ -12,6 +12,8 @@
     "\\.e2e-spec\\.ts$"
   ],
   "moduleNameMapper": {
+    "^slonik$": "<rootDir>/tests/mocks/slonik.ts",
+    "^uuid$": "<rootDir>/tests/mocks/uuid.ts",
     "@identity/(.*)$": "<rootDir>/apps/identity/src/$1",
     "@campaign/(.*)$": "<rootDir>/apps/campaign/src/$1",
     "@catalog/(.*)$": "<rootDir>/apps/catalog/src/$1",

@@ -1,6 +1,10 @@
 import { Module } from '@nestjs/common';
 import { hashicorpVaultConfig, databaseConfig, appConfig } from './configs';
-import { HashicorpVaultModule, DatabaseModule } from '@core/modules';
+import {
+  HashicorpVaultModule,
+  DatabaseModule,
+  HealthCheckModule,
+} from '@core/modules';
 import { ConfigModule } from '@nestjs/config';
 import { resolve } from 'node:path';
 import { LoggerModule } from 'nestjs-pino';
@@ -9,6 +13,8 @@ import { ExceptionInterceptor } from '@core/application/interceptors/exception.i
 import { APP_INTERCEPTOR } from '@nestjs/core';
 import { ContextInterceptor } from '@core/application/context/ContextInterceptor';
 import { RequestContextModule } from 'nestjs-request-context';
+import { SeasonModule } from './modules/season/season.module';
+import { SeasonGroupModule } from './modules/season-group/season-group.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -23,7 +29,10 @@ import { RequestContextModule } from 'nestjs-request-context';
     RequestContextModule,
     HashicorpVaultModule.forRoot(),
     DatabaseModule.forRoot(),
+    HealthCheckModule.forRoot(),
     LoggerModule.forRootAsync(loggerModuleParams),
+    SeasonModule,
+    SeasonGroupModule,
   ],
   controllers: [],
   providers: [
